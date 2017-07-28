@@ -12,6 +12,7 @@ object Dependencies {
     val simulacrum = "0.10.0"
     val machinist = "0.6.1"
     val cats = "0.9.0"
+    val catsEffect = "0.3"
     val shapeless = "2.3.2"
     val sourcecode = "0.1.4"
     val pprint = "0.5.2"
@@ -32,6 +33,10 @@ object Dependencies {
 
   val catsCore: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
     "org.typelevel" %%% "cats-core" % Versions.cats
+  ))
+
+  val catsEffect: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
+    "org.typelevel" %%% "cats-effect" % Versions.catsEffect
   ))
 
   val pprint: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
