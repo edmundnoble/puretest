@@ -1,5 +1,8 @@
-case class Test()
+package puretest
 
-case class TestSuite (tests: List[Test])
+final case class Test[A](name: String, run: A)
 
-case class TestRoot(suites: List[TestSuite])
+final case class TestSuite[T](tests: List[T])
+
+final case class TestRoot[S](suites: List[S])
+

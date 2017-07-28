@@ -1,35 +1,30 @@
 package puretest
 
 import cats.data.Reader
-import fansi.Str
 import pprint.PPrinter
 
-trait Assertion[A, S] {
-  def assert(a: A): Option[S]
-}
-
-object Assertion {
+object printers {
 
   trait ContextI {
     type F[_]
 
-    def assertion[A: Assertion[?, String]]: Assertion[F[A], String]
+    def assertion[A](implicit under: Assertion[A, String]): Assertion[F[A], Reader[PPrinter, String]]
   }
 
   val ContextImpl: ContextI = new ContextI {
     type F[A] = A
 
-    def assertion[A](implicit under: Assertion[A, String]): Assertion[A, String] =
-      (a: A) => under.assert(a).map { error =>
-        ???
-      }
+    def assertion[A](implicit under: Assertion[A, String]): Assertion[A, Reader[PPrinter, String]] =
+      (a: A) => under.assert(a).map(context(_))
   }
   type Context[A] = ContextImpl.F[A]
 
-  implicit def contextAssert[A: Assertion[?, String]]: Assertion[Context[A], String] = ContextImpl.assertion[A]
+  implicit def contextAssert[A: Assertion[?, String]]: Assertion[Context[A], Reader[PPrinter, String]] = {
+    ContextImpl.assertion[A]
+  }
 
-  def context(error: String, tag: String)
-             (implicit line: sourcecode.Line, enclosing: sourcecode.Enclosing): Reader[PPrinter, Str] = {
+  def context(error: String, tag: String = "")
+             (implicit line: sourcecode.Line, enclosing: sourcecode.Enclosing): Reader[PPrinter, String] = {
     Reader { pprinter: PPrinter =>
       def joinSeq[T](seq: Seq[T], sep: T): Seq[T] = {
         seq.flatMap(x => Seq(x, sep)).dropRight(1)
@@ -55,7 +50,7 @@ object Assertion {
       ) ++ tagStrs
       fansi.Str.join(prefix ++
         pprinter.tokenize(error, pprinter.defaultWidth, pprinter.defaultHeight, pprinter.defaultIndent).toSeq: _*
-      )
+      ).render
     }
   }
 }

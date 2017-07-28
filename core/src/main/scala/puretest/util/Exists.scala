@@ -1,4 +1,4 @@
-package puretest
+package puretest.util
 
 trait ExistsInt {
   type T1[F[_]] <: Any {type T}

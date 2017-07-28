@@ -1,4 +1,4 @@
-package puretest
+package puretest.util
 
 abstract class FunctionK[-A[_], +B[_]] { ab =>
   def run(a: A[Unk]): B[Unk]

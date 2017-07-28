@@ -11,7 +11,8 @@ object Dependencies {
     val kindProjector = "0.9.3"
     val simulacrum = "0.10.0"
     val machinist = "0.6.1"
-    val cats = "0.9.0"
+    val cats = "1.0.0-MF"
+    val catsMtl = "0.0.1"
     val catsEffect = "0.3"
     val shapeless = "2.3.2"
     val sourcecode = "0.1.4"
@@ -28,7 +29,8 @@ object Dependencies {
   ))
 
   val catsBundle: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
-    "org.typelevel" %%% "cats" % Versions.cats
+    "org.typelevel" %%% "cats-core" % Versions.cats,
+    "org.typelevel" %%% "cats-free" % Versions.cats
   ))
 
   val catsCore: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
@@ -37,6 +39,10 @@ object Dependencies {
 
   val catsEffect: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
     "org.typelevel" %%% "cats-effect" % Versions.catsEffect
+  ))
+
+  val catsMtl: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
+    "org.typelevel" %%% "cats-mtl-core" % Versions.catsMtl
   ))
 
   val pprint: Seq[Setting[_]] = Def.settings(libraryDependencies ++= Seq(
@@ -62,6 +68,7 @@ object Dependencies {
   ))
 
   val bintrayResolvers: Seq[Setting[_]] = Def.settings(
+    resolvers += Resolver.bintrayRepo("edmundnoble", "maven"),
     resolvers += "bintray/non" at "http://dl.bintray.com/non/maven"
   )
 

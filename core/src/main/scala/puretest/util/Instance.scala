@@ -1,4 +1,4 @@
-package puretest
+package puretest.util
 
 sealed trait Instance[F[_]] { fa =>
   import Instance._

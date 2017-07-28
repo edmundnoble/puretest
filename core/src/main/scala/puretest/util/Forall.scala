@@ -1,4 +1,4 @@
-package puretest
+package puretest.util
 
 trait ForallInt { f =>
   type T1[F[_]]

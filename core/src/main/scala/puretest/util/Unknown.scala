@@ -1,4 +1,4 @@
-package puretest
+package puretest.util
 
 trait UnknownInt {
   type T;    type T1
